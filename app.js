@@ -7,7 +7,9 @@ import connectToDatabase from "./database/mongodb.js" ;
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import subscriptionRoutes from "./routes/subscription.routes.js";
+import workflowRouter from "./routes/workflow.routes.js";
 import {arjectMiddleware} from "./middlewares/arject.middleware.js";
+
 
 const app = express();
 
@@ -19,7 +21,7 @@ app.use(arjectMiddleware);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/subscriptions" , subscriptionRoutes);
-
+app.use("/api/v1/workflows" , workflowRouter);
 app.use(errorMiddleware);
 
 app.listen(PORT , async () => {
