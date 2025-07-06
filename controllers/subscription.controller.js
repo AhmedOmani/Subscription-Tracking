@@ -11,6 +11,8 @@ export const createSubscription = async (req , res , next) => {
             user: req.user._id
         });
 
+        console.log("Subscription: " , subscription);
+
         if (!subscription) {
             const error = new Error("Subscription creation failed");
             error.staus = 400 ;
@@ -26,11 +28,13 @@ export const createSubscription = async (req , res , next) => {
         for (const daysBefore of reminders) {
             const reminderDate = dayjs(subscription.renewalDate).subtract(daysBefore , "day") ;
             if (reminderDate.isAfter(dayjs())) {
+                //ASSIGN NEW JOB.
                 await reminderQueue.add("sendReminder" , {
                     subscriptionId: subscription._id,
                     daysBefore
-                }, {
-                    delay: reminderDate.diff(dayjs()),
+                } , {
+                    delay: 5000,
+                    //delay: reminderDate.diff(dayjs()),
                     attempts: 3,
                 });
             }

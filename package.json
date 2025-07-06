@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "worker": "node worker/reminderWorker.js"
   },
   "dependencies": {
     "@arcjet/inspect": "^1.0.0-beta.8",
