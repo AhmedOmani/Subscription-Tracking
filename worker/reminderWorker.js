@@ -3,6 +3,7 @@ import IORedis from "ioredis";
 import dayjs from "dayjs";
 import mongoose from "mongoose";
 import Subscription from "../models/subscription.model.js";
+import { sendReminderEmail } from "../utils/sendEmails.js";
 import User from "../models/user.model.js";
 import { REDIS_HOST , REDIS_PORT , DB_URI } from "../config/env.js";
 
@@ -49,6 +50,11 @@ connectDB().then(() => {
             console.log(`Sending remider email to ${subscription.user.email}`);
 
             //TODO: Send Email Logic
+            await sendReminderEmail({
+                to: subscription.user.email,
+                subscription: subscription,
+                daysBefore: job.data.daysBefore
+            });
 
             console.log(`Successfully sent reminder for subscription ${job.data.subscriptionId}`);
         
